@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+var  bcrypt = require('bcryptjs');
 
 
 
-//class user
+// structure of class user
 const UserSchema = new mongoose.Schema({
     firstName : String,
     lastName : String,
@@ -11,13 +12,42 @@ const UserSchema = new mongoose.Schema({
     age : Number
 });
 
-// user model
+
+
+
+UserSchema.pre('save',function(next){
+
+    
+    // generate salt 
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) {
+        return next(err);
+        }
+       
+         //use salt to hash password
+        bcrypt.hash(this.password , salt, (err, hash) =>{
+            if (err) {
+           return next(err);
+            }
+         
+        
+            this.password = hash;
+            next();
+         });
+ 
+    });
+
+
+});
+
+
+
+
+
+
+
+// create user entity
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
-
-
-
-
-
 
 

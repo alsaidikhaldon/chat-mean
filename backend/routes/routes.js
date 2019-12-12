@@ -9,11 +9,14 @@ const usersControll = require('../controllers/user.controllers')
 //router.get('/',userLogin);
 
 // LOGIN *********
-router.get('/login', usersControll.userLogin);
+router.post('/login', usersControll.userLogin);
 
 // REGISTERATION *********
 
-router.get('/register', usersControll.userRegister);
+router.post('/register',usersControll.userRegister);
+   
+
+
 
 // DELEt *********
 
