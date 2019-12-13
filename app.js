@@ -7,6 +7,7 @@ const passport = require('passport');
 
 
 
+
 // initialize app with express
 const app = express();
 
@@ -23,9 +24,16 @@ mongoose.connection.on('error', (err) => {
 });
 
 
-// Middlewares 
+// Middlewares  ----> parser
 
 app.use(bodyParser.json());
+
+
+// Middlewares  ----> passport
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 
 

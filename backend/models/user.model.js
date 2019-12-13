@@ -15,7 +15,14 @@ const UserSchema = new mongoose.Schema({
 
 
 
+//  pre SAVE 
 UserSchema.pre('save',function(next){
+
+    // if password modified
+
+    if (!this.isModified('password')) {
+        return next();
+    }
 
     
     // generate salt 
