@@ -1,40 +1,55 @@
 const express = require('express');
 const router = express.Router();
 
-const usersServices = require('../models/user.services');
-const messageServices = require('../models/message.services');
+const userControllers = require('../controllers/user.controllers');
+const messageControllers = require('../controllers/message.controllers');
 const passport = require('passport')
 
 
+
 // MAIN home *********
-//router.get('/',userLogin);
 
-// LOGIN *********
-router.post('/login', usersServices.userLogin);
 
-// REGISTERATION *********
 
-router.post('/register',usersServices.userRegister);
+// *********** user LOGIN *********
+router.post('/login', userControllers.userLogin);
+
+//  ********** user LOGOUT *********
+router.get('/logout',isUserAuth, userControllers.userLogout);
+
+// *********** user REGISTERATION *********
+
+router.post('/register',userControllers.userRegister);
    
 
 
 
 // DELEt *********
 
-router.get('/delet/:id', usersServices.userDelet);
+//router.get('/delet/:id', userControllers.userDelet);
 
 // USER by id *********
 
-router.get('/user/:id?', usersServices.userById );
+//router.get('/user/:id?', userControllers.userById );
 
 
-// add new message *********
+// ************ message ADD NEW  *********
+router.post('/message/add',isUserAuth, messageControllers.addMessage);
 
-//router.post('/message/add',messageServices.addMessage);
+// ************  message LIST  *********
+router.post('/message/list',isUserAuth, messageControllers.listMessage);
 
-router.post('/message/add', passport.authenticate('jwt', { session : false}),  (req, res, next) => {
 
-    res.send("from add message");
-});
+
+function isUserAuth(req, res, next) {
+    if (req.isAuthenticated()) next();
+    else  return res.status(401).json({ message: 'Unauthorized Request' });
+    
+};
+
+
+
+
+
 
 module.exports = router ;

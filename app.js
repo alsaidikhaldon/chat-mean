@@ -4,6 +4,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const session =  require('express-session');
+var cookieParser = require('cookie-parser');
+
 
 
 
@@ -13,7 +16,7 @@ const app = express();
 
 
 // Database cconnection with mongoose
-
+mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('connected', () => {
     console.log("datbase is connected ...!");
@@ -28,13 +31,34 @@ mongoose.connection.on('error', (err) => {
 
 app.use(bodyParser.json());
 
+//app.use(express.cookieParser());
+
+
+
 
 // Middlewares  ----> passport
+app.use(session({
+    name : 'projectSession',
+    resave : false,
+    saveUninitialized : false,
+    secret : 'secret',
+    cookie :{ 
+        maxAge : 36000000,
+        httpOnly : false,
+        secure : false
+    }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
+require('./config/passport.config')
 
+
+
+//require('./config/passport')(passport);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 
 // set ROUTES *****
@@ -46,7 +70,6 @@ const Routes = require('./backend/routes/routes');
 // Routes
 
 app.use('/', Routes);
-//app.use('/signup', UserRoutes);
 
 
 
@@ -59,13 +82,6 @@ app.get('/', (req, res, next) => {
 });
 
 
-
-
-
-
-
-
-
 // ... static public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -74,5 +90,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 const _PORT = process.env.PORT;
 
 app.listen(_PORT, () => {
-    console.log(`Server started on port`);
+    console.log(`Server started on port --> ` + _PORT );
 });

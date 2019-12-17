@@ -48,6 +48,12 @@ UserSchema.pre('save',function(next){
 });
 
 
+// validation password
+
+UserSchema.methods.isPasswordValid = function(hashedpassword){
+    return  bcrypt.compareSync(hashedpassword, this.password);
+}
+
 
 
 
