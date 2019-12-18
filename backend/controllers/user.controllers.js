@@ -25,8 +25,7 @@ exports.userLogin = function (req, res, next) {
                 return res.status(501).json(err);
              }
              let returnUser = {
-                firstName: user.firstName,
-                email: user.email,
+               email: user.email,
                 id: user._id
             }
 
@@ -67,8 +66,7 @@ exports.userRegister = (req, res, next) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
-                password: req.body.password,
-                age: req.body.age
+                password: req.body.password
             });
 
              //SAVE new user object

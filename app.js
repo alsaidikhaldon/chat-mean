@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session =  require('express-session');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
+
 
 
 
@@ -26,17 +28,20 @@ mongoose.connection.on('error', (err) => {
 
 });
 
+ 
+// ************** Middlewares ***************
 
-// Middlewares  ----> parser
+// Middleware  ----> parser
 
 app.use(bodyParser.json());
 
-//app.use(express.cookieParser());
 
 
+// Middleware  ----> cors
+app.use(cors());
 
 
-// Middlewares  ----> passport
+// Middleware  ----> passport
 app.use(session({
     name : 'projectSession',
     resave : false,

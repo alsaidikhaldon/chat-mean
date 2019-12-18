@@ -1,0 +1,19 @@
+<div class="form-items">
+    <h3>Register now and try subchat</h3>
+    <p>register with your information</p>
+    <div class="page-links">
+        <a  [routerLink]="['/login']">Login</a><a class="active" [routerLink]="['/register']">Register</a>
+    </div>
+    <form (submit)="onRegister()" >
+        <input class="form-control" type="text" name="name" placeholder="First Name" required [(ngModel)]="name" name="firstname" >
+        <input class="form-control" type="text" name="name" placeholder="Last Name" required [(ngModel)]="name" name="lasttname">
+        <input class="form-control" type="email" name="email" placeholder="E-mail Address" required [(ngModel)]="name" name="email">
+        <input class="form-control" type="password" name="password" placeholder="Password" required [(ngModel)]="name" name="password">
+        <div class="form-button">
+            <button id="submit" type="submit" class="ibtn" >Register</button>
+        </div>
+    </form>
+    
+</div>
+
+
