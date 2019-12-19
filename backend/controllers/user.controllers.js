@@ -57,7 +57,7 @@ exports.userRegister = (req, res, next) => {
         if (user) {
             return res.send({
                 success: false,
-                msg: "email registered ... login or try ",
+                msg: "email registered ... login or try again",
             });
         } else {
 

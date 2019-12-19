@@ -1,19 +1,97 @@
+
+
+
+<div class="row">
+    <div class="img-holder">
+        <div class="bg"></div>
+        <div class="info-holder">
+            <img src="../../../assets/images/subchat-logo.png" alt="">
+        </div>
+    </div>
+    <div class="form-holder">
+        <div class="form-content">
+
+
 <div class="form-items">
     <h3>Register now and try subchat</h3>
     <p>register with your information</p>
     <div class="page-links">
-        <a  [routerLink]="['/login']">Login</a><a class="active" [routerLink]="['/register']">Register</a>
+        <a routerLinkActive="active"  [routerLink]="['/login']">Login</a>
+        <a routerLinkActive="active" class="active" [routerLink]="['/register']">Register</a>
     </div>
-    <form (submit)="onRegister()" >
-        <input class="form-control" type="text" name="name" placeholder="First Name" required [(ngModel)]="name" name="firstname" >
-        <input class="form-control" type="text" name="name" placeholder="Last Name" required [(ngModel)]="name" name="lasttname">
-        <input class="form-control" type="email" name="email" placeholder="E-mail Address" required [(ngModel)]="name" name="email">
-        <input class="form-control" type="password" name="password" placeholder="Password" required [(ngModel)]="name" name="password">
+    <form (submit)="onRegister()">
+    <div  [formGroup]="registerFormValidation" >
+        
+
+        <div class="form-group">
+            <input class="form-control" type="text" placeholder="First Name" [(ngModel)]="firstName" required
+            name="firstName" formControlName="firstname"
+            [ngClass]="{'is-invalid': registerFormValidation.get('firstname').touched && registerFormValidation.get('firstname').invalid}" />
+
+            <span class="invalid-feedback"> First name is require</span>
+        </div>
+
+
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Last Name" [(ngModel)]="lastName" required
+            name="lastName" formControlName="lastname"
+            [ngClass]="{'is-invalid': registerFormValidation.get('lastname').touched && registerFormValidation.get('lastname').invalid}" />
+
+          <span class="invalid-feedback"> Last name is require</span>
+
+        </div>
+       
+        <div class="form-group">
+        <input class="form-control" 
+               type="email" 
+               placeholder="E-mail Address" 
+               [(ngModel)]="email" 
+               required 
+               name="email" 
+               formControlName="email"
+            [ngClass]="{'is-invalid': registerFormValidation.get('email').touched && registerFormValidation.get('email').invalid}" />
+            
+
+            <div *ngIf="registerFormValidation.get('email').touched && registerFormValidation.get('email').invalid" class="invalid-feedback" >
+            <span *ngIf="registerFormValidation.get('email').errors.required" > Email is require </span>
+            <span *ngIf="registerFormValidation.get('email').errors.email" > You must enter valid email address</span>
+             </div>
+       
+        </div>
+
+        <div class="form-group">
+        <input class="form-control" 
+               type="password"  
+               placeholder="Password"  
+               [(ngModel)]="password" 
+               required 
+               name="password"
+               formControlName="password"
+               [ngClass]="{'is-invalid': registerFormValidation.get('password').touched && registerFormValidation.get('password').invalid}" />
+               
+               <span class="invalid-feedback"> Password is require </span>
+        
+
+            </div>
+
         <div class="form-button">
             <button id="submit" type="submit" class="ibtn" >Register</button>
         </div>
+    </div>    
     </form>
-    
+    <div>
+        <h3>{{message}}</h3>
+    </div>
 </div>
 
+       
+
+
+
+
+
+
+</div>
+</div>
+</div>
 
