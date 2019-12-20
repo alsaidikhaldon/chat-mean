@@ -14,13 +14,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 
 import { UserService } from './services/user.service';
+import { MainComponent } from './components/main/main.component';
 
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', component: HomeComponent }
+  { path: 'main', component: MainComponent }
  
 ];
 
@@ -33,7 +35,8 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

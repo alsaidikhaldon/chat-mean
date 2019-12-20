@@ -11,10 +11,10 @@ passport.use('local', new LocalStrategy({
         User.findOne({ email: username }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { msg: 'Incorrect username.' });
+                return done(null, false, { success: false, msg: 'Incorrect username.' });
             }
             if (!user.isPasswordValid(password)) {
-                return done(null, false, { msg: 'Incorrect password.' });
+                return done(null, false, {success: false,  msg: 'Incorrect password.' });
             }
             return done(null, user);
         });

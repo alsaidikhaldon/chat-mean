@@ -11,21 +11,20 @@ const passport = require('passport')
 
 
 
-
 exports.userLogin = function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
-        if (err) { 
-            return res.status(501).json(err); 
+        if (err) {
+            return res.send(err);
         }
         if (!user) {
-            return res.status(501).json(info)
+            return res.send(info)
         }
         req.logIn(user, function (err) {
-            if (err) { 
-                return res.status(501).json(err);
-             }
-             let returnUser = {
-               email: user.email,
+            if (err) {
+                return res.send(err);
+            }
+            let returnUser = {
+                email: user.email,
                 id: user._id
             }
 
@@ -34,7 +33,7 @@ exports.userLogin = function (req, res, next) {
                 msg: " Logged In Successfully! ",
                 user: returnUser,
                 success: true
-        
+
             });
         });
     })(req, res, next);
@@ -57,7 +56,7 @@ exports.userRegister = (req, res, next) => {
         if (user) {
             return res.send({
                 success: false,
-                msg: "email registered ... login or try again",
+                msg: "email registered ... login or try anothr email ! ",
             });
         } else {
 
