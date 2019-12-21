@@ -101,7 +101,8 @@ exports.userRegister = (req, res, next) => {
 
 exports.userLogout = (req, res, next) => {
     req.logout();
-  return res.status(200).json({message:'Logout Success'});
+  return res.status(200).json({success: true, msg: ' Logout Success ...'});
+  //res.send({success: true, msg:" Logout Success ..."});
     
 
 };

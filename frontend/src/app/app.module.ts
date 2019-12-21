@@ -15,6 +15,8 @@ import { HomeComponent } from './components/home/home.component';
 
 import { UserService } from './services/user.service';
 import { MainComponent } from './components/main/main.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { ConversationComponent } from './components/conversation/conversation.component';
 
 
 
@@ -36,7 +38,9 @@ const routes: Routes = [
     RegisterComponent,
     NavbarComponent,
     HomeComponent,
-    MainComponent
+    MainComponent,
+    ContactComponent,
+    ConversationComponent
   ],
   imports: [
     BrowserModule,

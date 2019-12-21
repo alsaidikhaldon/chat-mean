@@ -11,8 +11,8 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 
 
-// *************** add new Message *******************
-
+ //***************************************************************** */
+// *************** add new Message **********************************
 
 exports.addMessage = function (req, res, next) {
 
@@ -47,8 +47,11 @@ exports.addMessage = function (req, res, next) {
 
 };
 
-// *************** listing Messages by user session *******************
 
+
+
+ //***************************************************************** */
+// *************** listing Messages by user session *******************
 
 exports.listMessage = function (req, res, next) {
 
@@ -56,12 +59,12 @@ exports.listMessage = function (req, res, next) {
     Message.find({authorId : req.user.id }, (err, messages) =>{
         if (err) {
             res.send({
-                sucsses : false,
+                success : false,
                 msg : 'Error while reteriving the messages .. '
             });
         }
         return res.send({
-            sucsses : true,
+            success : true,
             messages
         });
     });

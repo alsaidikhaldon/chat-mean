@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
 
   // form validation
   loginForm = new FormGroup({
-   
     email : new FormControl('',  [ Validators.required, Validators.email ]),
     password : new FormControl('',Validators.required)
   }); 
@@ -43,7 +42,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
   }
-
     // creat newUser object
     const userAuth = {
       email: this.email,
@@ -54,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     if(resp.success){ 
       this.message = resp.msg;
-      return setTimeout(() => {  this._router.navigate(['/main']); }, 4000);
+      return setTimeout(() => {  this._router.navigate(['/']); }, 2000);
     }else{
        this.message = resp.msg;
       }
