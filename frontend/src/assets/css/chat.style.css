@@ -25,10 +25,12 @@
 }
 .subchat-nav {
     background-color: #391b54;
+    padding: 0.5rem 3rem;
 }
 
 .subchat-logo > img {
     max-height: 70px;
+    max-width : 160px
 }
 
 
