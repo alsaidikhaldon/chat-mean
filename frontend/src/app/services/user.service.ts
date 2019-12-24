@@ -46,6 +46,26 @@ export class UserService {
 
 
 
+     user(){
+       return this._http.get('http://localhost:3000/user' ,{
+         observe:'body',
+         withCredentials: true,
+         headers: new HttpHeaders().append('Content-Type','application/json')
+       });
+     }
+
+
+     users(){
+      return this._http.get('http://localhost:3000/users' ,{
+        observe:'body',
+        withCredentials: true,
+        headers: new HttpHeaders().append('Content-Type','application/json')
+      });
+    }
+
+
+
+
 
 
     //  home(){

@@ -70,9 +70,6 @@ exports.listMessage = function (req, res, next) {
     });
 
 
-  
-
-
 };
 
 

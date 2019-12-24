@@ -7,8 +7,10 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport')
 
 
-// user login 
 
+
+//***************************************************************** */
+//***************************  // user login  ************************************** */ 
 
 
 exports.userLogin = function (req, res, next) {
@@ -39,7 +41,9 @@ exports.userLogin = function (req, res, next) {
     })(req, res, next);
 };
 
-// user Register 
+
+//***************************************************************** */
+//***************************  user Register  ************************************** */   
 
 
 exports.userRegister = (req, res, next) => {
@@ -96,8 +100,8 @@ exports.userRegister = (req, res, next) => {
 };
 
 
-
-// logout
+//***************************************************************** */
+//***************************  user logout  ************************************** */ 
 
 exports.userLogout = (req, res, next) => {
     req.logout();
@@ -111,6 +115,51 @@ exports.userLogout = (req, res, next) => {
 
 
 
+ //***************************************************************** */
+// *************** logged user (retuen first and last name ) ******************* */
+
+exports.user = function (req, res, next) {
+    let returnUser = {
+        firstName: req.user.firstName,
+        lastName: req.user.lastName
+    }
+
+    
+    return res.send({
+        success : true,
+        user : returnUser
+    });
+
+};
+
+
+
+ //***************************************************************** */
+// *************** get all users ******************* */
+
+exports.allUsers = function (req, res, next) {
+
+    var query = User.find({}).select({ "firstName": 1,"lastName": 1,  "_id": 0});
+    query.exec(function (_err, users) {
+        if (_err) {
+            return res.send({
+                success: false,
+                msg: "error , try agin .. ",
+            });
+        }
+        
+        
+        return res.send({
+            success: true,
+            users : users
+        });
+
+        
+    })
+
+    User.find({}).select({})
+}
+    
 
 
 

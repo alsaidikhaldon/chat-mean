@@ -22,7 +22,12 @@ router.get('/logout',isUserAuth, userControllers.userLogout);
 router.post('/register',userControllers.userRegister);
    
 
+// *********** user USER Logged *********
+router.get('/user', isUserAuth, userControllers.user);
 
+
+// *********** user All USERs *********
+router.get('/users',userControllers.allUsers);
 
 
 // ************ message ADD NEW  *********
@@ -42,6 +47,7 @@ function isUserAuth(req, res, next) {
     
     
 };
+
 
 
 

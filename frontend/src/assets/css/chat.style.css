@@ -699,6 +699,9 @@
     outline: none;
   }
  
+  #frame #sidepanel #contacts > ul{
+    display: inline;
+  }
 
 
 
