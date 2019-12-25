@@ -4,9 +4,6 @@ const Message = require('../models/message.model');
 
 
 
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-
 
 
 
@@ -19,8 +16,7 @@ exports.addMessage = function (req, res, next) {
     //CREAT new user object
     let newMessage = new Message({
 
-        authorName: req.user.firstName,
-        authorId: req.user.id,
+        sender: req.user,
         content: req.body.content,
         date: Date(Date.now()).toString(),
         isdeliver: false
@@ -56,7 +52,7 @@ exports.addMessage = function (req, res, next) {
 exports.listMessage = function (req, res, next) {
 
 
-    Message.find({authorId : req.user.id }, (err, messages) =>{
+    Message.find({sender : req.user }, (err, messages) =>{
         if (err) {
             res.send({
                 success : false,

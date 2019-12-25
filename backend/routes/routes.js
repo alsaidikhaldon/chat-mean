@@ -3,6 +3,7 @@ const router = express.Router();
 
 const userControllers = require('../controllers/user.controllers');
 const messageControllers = require('../controllers/message.controllers');
+const conversationController = require('../controllers/conversation.controller.js')
 const passport = require('passport')
 
 
@@ -38,6 +39,19 @@ router.get('/message/list',isUserAuth, messageControllers.listMessage);
 
 
 
+
+
+// ************   Conversation CREATE   *********
+router.post('/conversation/create', conversationController.createConversation);
+
+
+// ************   Get Conversation by USER   *********
+
+router.get('/conversation/getbyuser', conversationController.getConversationByUser);
+
+
+
+
 function isUserAuth(req, res, next) {
     if (req.isAuthenticated()) next();
     else  res.send({ success: false, msg: ' Unauthorized ............' });
@@ -47,6 +61,16 @@ function isUserAuth(req, res, next) {
     
     
 };
+
+
+
+router.get('/aa', (req, res) => {
+  res.send("   user is ===> " + req.user + " conversation is ===> " + req.body.conversation );
+
+});
+
+
+
 
 
 

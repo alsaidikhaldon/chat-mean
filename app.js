@@ -65,13 +65,13 @@ app.use(passport.session());
 
 
 
-//require('./config/passport')(passport);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-// set ROUTES *****
+// ************************ set ROUTES ****************************/
 
 // Route requires
 const Routes = require('./backend/routes/routes');
@@ -86,10 +86,10 @@ app.use('/', Routes);
 
 // route test
 
-app.get('/', (req, res, next) => {
-    res.send('im a first route');
+// app.get('/', (req, res, next) => {
+//     res.send('im a first route');
 
-});
+// });
 
 
 // ... static public folder

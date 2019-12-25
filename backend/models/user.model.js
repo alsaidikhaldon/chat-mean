@@ -8,7 +8,8 @@ const UserSchema = new mongoose.Schema({
     firstName : String,
     lastName : String,
     email : { type : String, required : true },
-    password : { type : String, required : true }
+    password : { type : String, required : true },
+    conversations : [ {conversation : {  type:  mongoose.Schema.Types.ObjectId ,  ref: 'Conversation'  }}]
 });
 
 

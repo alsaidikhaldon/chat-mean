@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service'
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -15,7 +16,7 @@ export class ContactComponent implements OnInit {
    contacts : any;
 
 
-  constructor( private _userServeice : UserService) { 
+  constructor( private _userServeice : UserService, private _router : Router) { 
 
     this._userServeice.user()
     .subscribe((resp : any) => {
@@ -24,7 +25,10 @@ export class ContactComponent implements OnInit {
         this.userLoggedLastName = resp.user.lastName;
         this.userOnline = "online";
         
-      }else{this.userOnline = "offline";}
+      }else{
+        this.userOnline = "offline";
+        return  this._router.navigate(['/login']); 
+      }
     });
    
 
