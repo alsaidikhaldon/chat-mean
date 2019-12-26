@@ -1,5 +1,7 @@
 const express = require('express');
 const Message = require('../models/message.model');
+const Conversation = require('../models/conversation.model');
+const User = require('../models/user.model');
 
 
 
@@ -8,15 +10,20 @@ const Message = require('../models/message.model');
 
 
 
- //***************************************************************** */
+ //***************************************************************** */ 5e043b0fb166bb1c9090fc72
 // *************** add new Message **********************************
 
-exports.addMessage = function (req, res, next) {
+exports.addMessage = async function (req, res, next) {
 
+
+    msgConversation = await Conversation.findById(req.params.convid) ;
     //CREAT new user object
     let newMessage = new Message({
 
+       
+
         sender: req.user,
+        conversation : msgConversation,
         content: req.body.content,
         date: Date(Date.now()).toString(),
         isdeliver: false
@@ -40,6 +47,17 @@ exports.addMessage = function (req, res, next) {
         });
 
     });
+
+    
+     // push new conversation to user
+     var userId = req.user.id;
+     const UserById = await User.findById(userId);
+     UserById.messages.push(newMessage);
+     await UserById.save();
+     
+      // push new conversation to participant
+      msgConversation.messages.push(newMessage);
+     await msgConversation.save();
 
 };
 
@@ -71,4 +89,35 @@ exports.listMessage = function (req, res, next) {
 
 
   
+
+
+// ************ Messages BY  CONVERSATION *************************/
+
+
+exports.getMessagesByConv = async  function (req, res, next) {
+
+
+
+    Message.find({conversation : req.params.convid}).select({ "sender": 1,"content": 1, "date":1,  "_id": 0}).exec( function(err, messages){
+        if (err) {
+            return res.send({
+                success: false,
+                msg: " error retrive  conversations  ....!!",
+            });
+        }
+
+        return res.send({
+            success : true,
+           // user : req.user,
+           messages : messages
+        });
+
+       
+
+    });
+   
+    
+
+};
+
 

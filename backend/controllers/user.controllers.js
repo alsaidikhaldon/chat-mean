@@ -118,6 +118,7 @@ exports.userLogout = (req, res, next) => {
 
 exports.user = function (req, res, next) {
     let returnUser = {
+        id : req.user.id,
         firstName: req.user.firstName,
         lastName: req.user.lastName
     }

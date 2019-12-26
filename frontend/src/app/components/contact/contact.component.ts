@@ -11,6 +11,7 @@ export class ContactComponent implements OnInit {
 
    userLoggedFirstName : string ="";
    userLoggedLastName : string  ="";
+   
    userOnline : string  ="";
 
    contacts : any;
@@ -31,6 +32,8 @@ export class ContactComponent implements OnInit {
       }
     });
    
+    
+    
 
 
   }

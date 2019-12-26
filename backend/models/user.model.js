@@ -9,7 +9,8 @@ const UserSchema = new mongoose.Schema({
     lastName : String,
     email : { type : String, required : true },
     password : { type : String, required : true },
-    conversations : [ {conversation : {  type:  mongoose.Schema.Types.ObjectId ,  ref: 'Conversation'  }}]
+    messages : [ {message : { type: mongoose.Types.ObjectId, ref : 'Message' }} ],
+    conversations : [ { conversation : { type:  mongoose.Schema.Types.ObjectId , ref: 'Conversation' }}]
 });
 
 

@@ -65,6 +65,20 @@ export class UserService {
 
 
 
+    messagesByConversation(convId : any){
+      return this._http.get('http://localhost:3000/conversation/' + convId ,{
+        observe:'body',
+        withCredentials: true,
+        headers: new HttpHeaders().append('Content-Type','application/json')
+      });
+    }
+
+
+
+    
+
+
+
 
 
 

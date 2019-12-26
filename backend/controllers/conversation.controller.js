@@ -8,43 +8,58 @@ const User = require('../models/user.model');
 // ************************ Create Conversation ********************** *//
 
 
-exports.createConversation = function (req, res, next) {
+exports.createConversation = async function (req, res, next) {
+
+    convParticipant = await User.findById(req.params.participantid) ;
 
     //CREAT new Conversation object
     let newConversation = new Conversation({
-
         created :  Date(Date.now()).toString(),
-        
-
+        createBy : req.user,
+        participant : convParticipant
+       
     });
+   
 
     // SAVE new Conversation object
-
-    newConversation.save((err, conversation) => {
-        newConversation.users.push(req.user)
+    newConversation.save(async(err, conversation) =>  {
+        
         if (err) {
             return res.send({
                 success: false,
                 msg: " conversation  cant save content is too long  ....!!",
-
             });
         }
+
         return res.json({
             success: true,
             msg: "message save succes ....  Congratulations ",
-            conversation : conversation
+            conversation : conversation,
+           
         });
-
     });
+
+
+     // push new conversation to user
+     var userId = req.user.id;
+     const UserById = await User.findById(userId);
+     UserById.conversations.push(newConversation);
+     await UserById.save();
+     
+      // push new conversation to participant
+      convParticipant.conversations.push(newConversation);
+     await convParticipant.save();
 
 };
 
 
-// ************************ Get Conversation BY USER ********************** *//
+// ************************ Get Conversations BY USER ********************** *//
 
-exports.getConversationByUser =  function (req, res, next) {
+exports.getConversationsByUser = async  function (req, res, next) {
     
-    Conversation.find({}, (err, conversations) => {
+    User.find()
+        //.populate('conversations')
+        .exec (function(err, conversations)  {
 
         if (err) {
             res.send({
@@ -60,10 +75,45 @@ exports.getConversationByUser =  function (req, res, next) {
         }
         return res.send({
             success : true,
-            user : req.user,
-            conversations : conversations
+            //user : req.user,
+            conversations
         });
     });
+    // var userId = req.user.id;
+    // const convsByUser = await  User.findById(userId).populate('conversations');
+   
 
+ 
 
 };
+
+
+
+
+// ************ all conversation *************************/
+
+
+exports.getAllConversations = async  function (req, res, next) {
+
+    Conversation.find().exec( function(err, conversations){
+        if (err) {
+            return res.send({
+                success: false,
+                msg: " error retrive  conversations  ....!!",
+            });
+        }
+
+        return res.send({
+            success : true,
+           // user : req.user,
+           Conversations : conversations
+        });
+
+       
+
+    });
+   
+    
+
+};
+
