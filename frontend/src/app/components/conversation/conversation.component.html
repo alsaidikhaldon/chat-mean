@@ -1,3 +1,7 @@
+
+<div id="frame">
+
+
 <div class="content">
     <div class="contact-profile">
         <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
@@ -11,13 +15,13 @@
     <div class="messages">
         <ul>
             <li class="sent" *ngFor="let message of messages">
-                <a> {{message.sender}} </a><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
                 <p>{{message.content}}</p>
             </li>
-            <!-- <li class="replies">
+           <li class="replies">
                 <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
                 <p>When you're backed against the wall, break the god damn thing down.</p>
-            </li> -->
+            </li>
             
         </ul>
     </div>
@@ -28,4 +32,8 @@
         <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
         </div>
     </div>
+</div>
+
+
+
 </div>

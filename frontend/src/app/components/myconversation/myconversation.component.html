@@ -1,0 +1,29 @@
+<div id="sidepanel">
+
+
+  <div id="profile" class=" card-title ">
+    <h5>My Conversations</h5>
+
+  </div>
+
+  <div id="contacts">
+    <ul>
+
+      <li class="contact" *ngFor="let myConv of myConvs" role="button"  [routerLink]="['/conversation/', myConv.convId]">
+        <div class="wrap">
+          <span class="contact-status online"></span>
+          <img src="../../../assets/images/app-pers.jpg" alt="" /> 
+          <div class="meta">
+            <p class="name">{{myConv.partFN}} {{myConv.partLN}} </p>
+            <p class="preview">{{myConv.convId}}</p>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+    <h5></h5>
+
+  </div>
+
+</div>

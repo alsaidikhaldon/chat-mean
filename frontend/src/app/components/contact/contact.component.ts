@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { MessageService } from "../../services/message.service";
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,25 +17,19 @@ export class ContactComponent implements OnInit {
 
    contacts : any;
 
+   conversationId : string= "";
 
-  constructor( private _userServeice : UserService, private _router : Router) { 
 
-    this._userServeice.user()
-    .subscribe((resp : any) => {
-      if (resp.success) { 
-        this.userLoggedFirstName = resp.user.firstName;
-        this.userLoggedLastName = resp.user.lastName;
-        this.userOnline = "online";
-        
-      }else{
-        this.userOnline = "offline";
-        return  this._router.navigate(['/login']); 
-      }
-    });
+  constructor( 
+    private _userService : UserService, 
+    private _messageServeice : MessageService, 
+    private _router : Router
+    ) { 
+
+
+
+ 
    
-    
-    
-
 
   }
 
@@ -42,15 +37,38 @@ export class ContactComponent implements OnInit {
 
     
 
-    this._userServeice.users()
+    this._userService.users()
     .subscribe((resp : any) => {
-     this.contacts = resp.users;
      
+     this.contacts = resp.users;
+   
     });
 
 
     
-  
+   
+
+
+  }
+
+
+  getConversation(participantid){
+
+    this._messageServeice.getConversationByPart(participantid)
+    .subscribe((resp : any) => {
+      if (resp.success) { 
+        this.conversationId  = resp.partConversation._id;
+        console.log("conversation id retuen by user : " + this.conversationId);
+        return  this._router.navigate(['/conversation', this.conversationId]); 
+       
+        
+      }
+      
+    });
+
+    console.log("participate id : " + participantid);
+    
+
 
   }
 

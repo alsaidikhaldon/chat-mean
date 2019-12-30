@@ -8,47 +8,109 @@ const User = require('../models/user.model');
 // ************************ Create Conversation ********************** *//
 
 
-exports.createConversation = async function (req, res, next) {
+exports.getConversation = async function (req, res, next) {
 
-    convParticipant = await User.findById(req.params.participantid) ;
+  
+    
+    
+// $or: [ { participant : req.params.participantid }, { createBy : req.params.participantid }] 
 
-    //CREAT new Conversation object
-    let newConversation = new Conversation({
-        created :  Date(Date.now()).toString(),
-        createBy : req.user,
-        participant : convParticipant
-       
-    });
-   
-
-    // SAVE new Conversation object
-    newConversation.save(async(err, conversation) =>  {
+    Conversation.findOne({ $or: [ 
+                         { participant : req.params.participantid, createBy : req.user.id }, 
+                         {  participant : req.user.id, createBy :req.params.participantid }
+                        ]})
+        .select({"_id": 1, "created": 1})
+        .exec( async function(err, partConversation){
         
         if (err) {
             return res.send({
                 success: false,
-                msg: " conversation  cant save content is too long  ....!!",
+                msg: " err when finding conversation  ....!!",
             });
         }
 
-        return res.json({
-            success: true,
-            msg: "message save succes ....  Congratulations ",
-            conversation : conversation,
-           
-        });
+        if (partConversation) {
+            // creat new conversation
+ 
+            return res.send({
+             success: true,
+             msg: "conversation  exist ",
+             partConversation : partConversation
+         });
+     }
+ 
+        
+           // create  conversation if not exist
+        if (!partConversation) {
+
+            console.log(" not exist yet ...will creat new conversation");
+            
+       
+           // get participant 
+           convParticipant = await User.findById( req.params.participantid);
+
+
+           //CREAT new Conversation object
+           let newConversation = new Conversation({
+               created: Date(Date.now()).toString(),
+               createBy: req.user,
+               participant: convParticipant
+
+           });
+
+
+           // SAVE new Conversation object
+           newConversation.save(async (err, partConversation) => {
+
+               if (err) {
+                   return res.send({
+                       success: false,
+                       msg: " conversation  cant save content is too long  ....!!",
+                   });
+               }
+
+               return res.json({
+                   success: true,
+                   msg: "conversation save succes ....  Congratulations ",
+                   partConversation: partConversation
+
+               });
+           });
+
+
+           // push new conversation to user
+           var userId = req.user.id;
+           const UserById = await User.findById(userId);
+           UserById.conversations.push(newConversation);
+           await UserById.save();
+
+           // push new conversation to participant
+           convParticipant.conversations.push(newConversation);
+           await convParticipant.save();
+
+
+
+
+
+
+
+        }
+
+
+       
+
+        
+      
+
+        
     });
 
 
-     // push new conversation to user
-     var userId = req.user.id;
-     const UserById = await User.findById(userId);
-     UserById.conversations.push(newConversation);
-     await UserById.save();
-     
-      // push new conversation to participant
-      convParticipant.conversations.push(newConversation);
-     await convParticipant.save();
+
+
+
+
+
 
 };
 
@@ -57,9 +119,12 @@ exports.createConversation = async function (req, res, next) {
 
 exports.getConversationsByUser = async  function (req, res, next) {
     
-    User.find()
-        //.populate('conversations')
-        .exec (function(err, conversations)  {
+    
+    Conversation.find({ $or: [ 
+        { participant :  req.user.id}, 
+        { createBy : req.user.id }
+       ]})
+       .exec (function(err, conversations)  {
 
         if (err) {
             res.send({
@@ -117,3 +182,36 @@ exports.getAllConversations = async  function (req, res, next) {
 
 };
 
+
+
+//*************** get conversation with participant */
+
+exports.getConversationsByParticipant = async  function (req, res, next) {
+
+    Participantid = req.params.participantid;
+    
+    
+
+    Conversation.find({participant : req.params.participantid}).exec( function(err, conversations){
+        if (err) {
+            return res.send({
+                success: false,
+                msg: " error retrive  conversations  ....!!",
+            });
+        }
+
+        return res.send({
+            success : true,
+           // user : req.user,
+           Conversations : conversations
+        });
+
+       
+
+    });
+
+    
+   
+    
+
+};

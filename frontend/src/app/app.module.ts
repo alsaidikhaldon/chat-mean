@@ -12,19 +12,25 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
-
-import { UserService } from './services/user.service';
 import { MainComponent } from './components/main/main.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
 
+import { UserService } from './services/user.service';
+import { MessageService } from './services/message.service';
+import { MyconversationComponent } from './components/myconversation/myconversation.component';
+
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+ 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'conversation/:convid', component: ConversationComponent }
+  { path: 'conversation/:convid', component: ConversationComponent },
+  { path: 'getconversation/:participantid', component: ConversationComponent },
+  { path: '',  component: HomeComponent },
+ { path: 'blank/:convid', redirectTo: 'conversation/:convid' }
+  
  
 ];
 
@@ -40,20 +46,25 @@ const routes: Routes = [
     HomeComponent,
     MainComponent,
     ContactComponent,
-    ConversationComponent
+    ConversationComponent,
+    MyconversationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    //RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     ReactiveFormsModule
     
   ],
   providers: [
-    UserService
+    UserService,
+    MessageService
+
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [RouterModule]
 })
 export class AppModule { }

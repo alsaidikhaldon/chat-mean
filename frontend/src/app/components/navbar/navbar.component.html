@@ -1,4 +1,4 @@
-<nav class="mb-4 navbar navbar-expand-lg  navbar-dark subchat-nav">
+<nav class="mb-4 navbar navbar-expand-lg  navbar-dark subchat-nav" >
     <a class="navbar-brand font-bold white subchat-logo" href="#"> <img src="../../../assets/images/subchat-logo-h.png" alt="subchat-logo"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -6,6 +6,34 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav ml-auto">
 
+               <li class="nav-item dropdown">
+                <a href="" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <div class="profile">
+                    <img id="profile-img" src="../../../assets/images/app-pers.jpg" class={{userOnline}} alt="" />
+                    <p>{{userLoggedFirstName | uppercase }} {{userLoggedLastName | uppercase }}</p>
+                   
+                    
+                    
+                   
+                </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+                    <a class="dropdown-item" href="#">My account</a>
+                    <a class="dropdown-item" href="#" role="button" (click)="logout()" >Log out</a>
+                </div>
+            </li> 
+
+            <!-- <li>
+                <div class="profile">
+                    <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class={{userOnline}} alt="" />
+                    <p>{{userLoggedFirstName | uppercase }} {{userLoggedLastName | uppercase }}</p>
+                   
+                    <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                    
+                   
+                </div>
+            </li> -->
+<!-- 
             <li class="nav-item ">
                
                 <a class="nav-link" href="#"><i class="fa fa-user"></i> Profile</a>
@@ -15,18 +43,12 @@
             <li class="nav-item ">
                 <a class="nav-link" href="#" role="button" (click)="logout()" >Log out</a>
                       
-            </li>
+            </li> -->
 
             
            
             
-            <!-- <li class="nav-item dropdown">
-                <a href="" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Profile </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-                    <a class="dropdown-item" href="#">My account</a>
-                    <a class="dropdown-item" href="#" role="button" (click)="logout()" >Log out</a>
-                </div>
-            </li> -->
+          
         </ul>
     </div>
 </nav>

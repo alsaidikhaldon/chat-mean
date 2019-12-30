@@ -10,9 +10,38 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor( private _userService : UserService, private _router : Router) { }
+
+  isLogeddIn : boolean = false ;
+
+
+  
+  userLoggedFirstName : string ="";
+  userLoggedLastName : string  ="";
+  
+  userOnline : string  ="";
+
+
+  constructor( private _userService : UserService, private _router : Router ) { 
+
+
+    
+  
+
+  }
 
   ngOnInit() {
+    this._userService.user().subscribe((resp : any) => {
+
+      if(resp.success){ 
+        this.isLogeddIn = true;
+        
+       }
+      
+    });
+
+    this.getCurrent();
+
+    
   }
 
   
@@ -25,16 +54,23 @@ export class NavbarComponent implements OnInit {
     )
     
     
-    //   if(resp.success){ 
-    //  console.log(resp);
-     
-    //   return setTimeout(() => {  this._router.navigate(['/login']); }, 2000);
-    // }else{
-    //   console.log(" cant logout");
-      
-    //   }
-    
-    
+  }
+
+  private getCurrent(){
+    this._userService.user()
+    .subscribe((resp : any) => {
+      if (resp.success) { 
+        this.userLoggedFirstName = resp.user.firstName;
+        this.userLoggedLastName = resp.user.lastName;
+        this.userOnline = "online";
+        
+      }else{
+        this.userOnline = "offline";
+       
+        return  this._router.navigate(['/login']); 
+      }
+    });
+
   }
 
 }

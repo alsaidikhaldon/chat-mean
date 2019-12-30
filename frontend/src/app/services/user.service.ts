@@ -16,9 +16,6 @@ export class UserService {
 
   
 
-
-
-
     createAccount(user : any){
      return  this._http.post('http://localhost:3000/register', user);
      
@@ -33,6 +30,8 @@ export class UserService {
       });
       
      }
+
+
 
         
     logout(){
@@ -72,6 +71,30 @@ export class UserService {
         headers: new HttpHeaders().append('Content-Type','application/json')
       });
     }
+
+
+    getUserInfoById(userId : any){
+      
+        return this._http.get('http://localhost:3000/userInfo/'+userId, {
+          observe:'body',
+          withCredentials: true,
+          headers: new HttpHeaders().append('Content-Type','application/json')
+        });
+      
+    }
+
+
+
+
+
+
+
+    
+   
+
+
+
+    
 
 
 

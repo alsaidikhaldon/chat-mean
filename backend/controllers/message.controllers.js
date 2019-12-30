@@ -64,13 +64,13 @@ exports.addMessage = async function (req, res, next) {
 
 
 
- //***************************************************************** */
+
 // *************** listing Messages by user session *******************
 
 exports.listMessage = function (req, res, next) {
 
 
-    Message.find({sender : req.user }, (err, messages) =>{
+    Message.find({}, (err, messages) =>{
         if (err) {
             res.send({
                 success : false,
@@ -93,12 +93,13 @@ exports.listMessage = function (req, res, next) {
 
 // ************ Messages BY  CONVERSATION *************************/
 
-
 exports.getMessagesByConv = async  function (req, res, next) {
 
 
 
-    Message.find({conversation : req.params.convid}).select({ "sender": 1,"content": 1, "date":1,  "_id": 0}).exec( function(err, messages){
+    Message.find({conversation : req.params.convid})
+        .select({ "sender": 1,"content": 1, "date":1,  "_id": 0})
+        .exec( function(err, messages){
         if (err) {
             return res.send({
                 success: false,

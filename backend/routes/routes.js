@@ -28,7 +28,7 @@ router.get('/user', isUserAuth, userControllers.user);
 
 
 // *********** user All USERs *********
-router.get('/users',userControllers.allUsers);
+router.get('/users',isUserAuth, userControllers.allUsers);
 
 
 // ************ message ADD NEW  *********
@@ -40,13 +40,19 @@ router.get('/message/list',isUserAuth, messageControllers.listMessage);
 
 
 
-// ************   Conversation CREATE   *********
-router.post('/conversation/create:participantid', conversationController.createConversation);
+// ************  GET Conversation or CREATE   *********
+router.get('/getconversation/:participantid',isUserAuth, conversationController.getConversation);
 
 
 // ************   Get Conversation by USER   *********
 
-router.get('/conversation/getbyuser', conversationController.getConversationsByUser);
+router.get('/myconversation',isUserAuth,  conversationController.getConversationsByUser);
+
+
+// ************   Get Conversation by Participant   *********
+
+router.get('/userInfo/:userId',isUserAuth,  userControllers.getUserInfoById);
+
 
 
 

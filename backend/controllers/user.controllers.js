@@ -138,7 +138,9 @@ exports.user = function (req, res, next) {
 
 exports.allUsers = function (req, res, next) {
 
-    var query = User.find({}).select({ "firstName": 1,"lastName": 1,  "_id": 0});
+    var cuurentUser = req.user.id;
+
+    var query = User.find({ _id: { $ne: cuurentUser } }).select({ "firstName": 1,"lastName": 1,  "_id": 1});
     query.exec(function (_err, users) {
         if (_err) {
             return res.send({
@@ -156,7 +158,7 @@ exports.allUsers = function (req, res, next) {
         
     })
 
-    User.find({}).select({})
+   
 }
     
 
@@ -170,11 +172,27 @@ exports.userDelet = (req, res, next) => {
 };
 
 
-// user by id 
+// user info  by id 
 
-exports.userById = (req, res, next) => {
-    res.send("im a user by id route from controller  ...********** gggggg* dd****");
+exports.getUserInfoById =  (req, res, next) =>{
+   let userId = req.params.userId;
+
+   User.findById({ _id : userId}).exec( function(err, info){
+    if (err) {
+        return res.send({
+            success: false,
+            msg: " error retrive  user info  ....!!",
+        });
+    }
+
+    return res.send({
+        success : true,
+       info : info
+    });
+ 
+});
 };
+
 
 
 // login with token --- can not athunitfiacation

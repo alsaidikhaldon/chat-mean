@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
   email : string;
   password : string;
 
+
+
+
+
   constructor(
     private _userServices : UserService,
     private _router : Router

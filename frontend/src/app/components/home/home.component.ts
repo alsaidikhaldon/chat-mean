@@ -9,17 +9,27 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  isLogeddIn : boolean = false ;
+
   constructor( private _router : Router,  private _userService : UserService ) {
-    // this._userService.home().subscribe(
-    //   (resp : any) => { 
-    //   if(resp.success){console.log(resp);}
-    //   else{this._router.navigate(['/login']);}
-    //   });
+   
 
 
    }
 
   ngOnInit() {
+
+    this._userService.user().subscribe((resp : any) => {
+
+      if(resp.success){ 
+        this.isLogeddIn = true;
+        console.log("from home  "  + this.isLogeddIn);
+        
+        
+       }
+      
+    });
+
     
   }
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  isLogeddIn : boolean = false ;
+
+
+
+  constructor( ) { }
 
   ngOnInit() {
+
+    
   }
 
 }
