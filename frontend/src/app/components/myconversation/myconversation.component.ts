@@ -11,6 +11,9 @@ import { UserService } from '../../services/user.service';
 export class MyconversationComponent implements OnInit {
   convs : any ;
   myConvs :any[];
+
+  userLoggedId : string;
+  myPart : string;
  
 
 
@@ -18,6 +21,16 @@ export class MyconversationComponent implements OnInit {
               private _userService : UserService ) { }
 
   ngOnInit() {
+
+    
+    this._userService.user()
+      .subscribe((resp: any) => {
+        if (resp.success) {
+          this.userLoggedId = resp.user.id;
+        }
+
+      
+    });
 
     this.myConvsInfo();
 
@@ -29,15 +42,13 @@ export class MyconversationComponent implements OnInit {
 
 
   myConvsInfo(){
-    this.myConvs = [];
 
+
+    this.myConvs = [];
     this._convService.getConvByUser()
     .subscribe((resp : any) => {
     
      this.convs = resp.conversations;
-
-
-     
 
      this.convs.forEach( conv => {
       var myConv = {
@@ -46,9 +57,16 @@ export class MyconversationComponent implements OnInit {
         partLN : ""
        };
         myConv.convId =  conv._id;
+
+        // if cuurent user sender or part
+        if (this.userLoggedId == conv.participant ) {
+        this.myPart = conv.createBy;
+        } else {
+          this.myPart = conv.participant;
+        }
      
        // console.log("convs foreach => " +  conv.participant);
-        this._userService.getUserInfoById(conv.participant)
+        this._userService.getUserInfoById(this.myPart)
         .subscribe((resp : any) => {
          myConv.partFN =  resp.info.firstName;
          myConv.partLN =  resp.info.lastName;
@@ -75,6 +93,9 @@ export class MyconversationComponent implements OnInit {
     
 
   }
+
+
+  
 
 
 

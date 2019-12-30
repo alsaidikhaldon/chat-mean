@@ -5,12 +5,8 @@
 <div class="content">
     <div class="contact-profile">
         <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-        <p>Harvey Specter {{userLoggedId}}</p>
-        <div class="social-media">
-            <i class="fa fa-facebook" aria-hidden="true"></i>
-            <i class="fa fa-twitter" aria-hidden="true"></i>
-             <i class="fa fa-instagram" aria-hidden="true"></i>
-        </div>
+        <p>{{partFN}} {{partLN}} </p>
+       
     </div>
     <div class="messages">
         <ul>
@@ -27,9 +23,28 @@
     </div>
     <div class="message-input">
         <div class="wrap">
-        <input type="text" placeholder="Write your message..." />
-        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-        <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+       <form (submit)="sendMessage()" [formGroup]="registerForm">
+      
+        <input class="form-control" 
+        type="text"  
+        placeholder="write your message ...... "  
+        [(ngModel)]="content" 
+        required 
+        name="content"
+        
+        formControlName="content"
+        [ngClass]="{'is-invalid': submitted &&  registerForm.get('content').errors}" />
+       
+        <div *ngIf=" submitted && registerForm.get('content').errors" class="invalid-feedback">
+            <span class="message-error" *ngIf="registerForm.get('content').errors.required"> write something ...  </span>
+            <span class="message-error" *ngIf="registerForm.get('content').hasError('maxlength')" > message must be max of 100 characters  </span>
+        </div>
+        <!-- <span class="invalid-feedback"> write something ...  message must be max of 100 characters  </span> -->
+
+       
+ 
+        <button id="submit" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      </form>
         </div>
     </div>
 </div>

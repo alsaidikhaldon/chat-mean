@@ -18,4 +18,18 @@ export class ConversationService {
 
 
   }
+
+  getConvInfo(convId){
+
+    return this._http.post('http://localhost:3000/conversationinfo/'+convId ,{
+      observe:'body',
+      withCredentials: true,
+      headers: new HttpHeaders().append('Content-Type','application/json')
+    });
+
+
+  }
+
+
+
 }

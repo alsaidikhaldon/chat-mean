@@ -186,13 +186,14 @@ exports.getAllConversations = async  function (req, res, next) {
 
 //*************** get conversation with participant */
 
-exports.getConversationsByParticipant = async  function (req, res, next) {
+exports.getConversationsById = async  function (req, res, next) {
 
-    Participantid = req.params.participantid;
+    let convid = req.params.convid;
     
     
 
-    Conversation.find({participant : req.params.participantid}).exec( function(err, conversations){
+    Conversation.findById({ _id : convid })
+       .exec( function(err, conversation){
         if (err) {
             return res.send({
                 success: false,
@@ -203,10 +204,8 @@ exports.getConversationsByParticipant = async  function (req, res, next) {
         return res.send({
             success : true,
            // user : req.user,
-           Conversations : conversations
+           conversation: conversation
         });
-
-       
 
     });
 

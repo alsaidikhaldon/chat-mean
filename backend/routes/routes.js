@@ -32,7 +32,7 @@ router.get('/users',isUserAuth, userControllers.allUsers);
 
 
 // ************ message ADD NEW  *********
-router.post('/message/add:convid',isUserAuth, messageControllers.addMessage);
+router.post('/message/add',isUserAuth, messageControllers.addMessage);
 
 // ************  message LIST  *********
 router.get('/message/list',isUserAuth, messageControllers.listMessage);
@@ -64,6 +64,13 @@ router.get('/conversation/all', conversationController.getAllConversations);
 
 // ************  Messages BY  CONVERSATION  *********
 router.get('/conversation/:convid', messageControllers.getMessagesByConv);
+
+
+
+// ************  CONVERSATION info By convid  *********
+router.post('/conversationinfo/:convid', conversationController.getConversationsById);
+
+
 
 
 

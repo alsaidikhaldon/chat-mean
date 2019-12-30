@@ -22,6 +22,16 @@ export class MessageService {
     });
   }
 
+  addMessage(message: any){
+    console.log("from services " +message );
+    
+    return this._http.post('http://localhost:3000/message/add' ,message, {
+      observe:'body',
+      withCredentials: true,
+      headers: new HttpHeaders().append('Content-Type','application/json')
+    });
+  }
+
 
 
 

@@ -15,8 +15,13 @@ const User = require('../models/user.model');
 
 exports.addMessage = async function (req, res, next) {
 
+    console.log("from controller " + req.body.convId);
+    console.log("from controller " + req.body.content);
 
-    msgConversation = await Conversation.findById(req.params.convid) ;
+
+    msgConversation = await Conversation.findById(req.body.convId) ;
+    
+    
     //CREAT new user object
     let newMessage = new Message({
 

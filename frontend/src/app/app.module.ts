@@ -28,8 +28,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'conversation/:convid', component: ConversationComponent },
   { path: 'getconversation/:participantid', component: ConversationComponent },
-  { path: '',  component: HomeComponent },
- { path: 'blank/:convid', redirectTo: 'conversation/:convid' }
+  { path: '',  component: HomeComponent }
   
  
 ];
