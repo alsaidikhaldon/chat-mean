@@ -6,6 +6,7 @@ import { Router, ActivatedRoute,  Event, NavigationEnd, ParamMap, NavigationStar
 import { Subscription } from "rxjs";
 import { filter } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewChecked, ElementRef, ViewChild } from  '@angular/core';
 
 
 @Component({
@@ -13,7 +14,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.css']
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit,  AfterViewChecked  {
+
+ 
+  @ViewChild('scrollMe',  {static: false}) scrollMe: ElementRef;
+  //scrollTop = 200;
+
 
   partFN : string="" ;
   partLN : string="" ;
@@ -31,6 +37,7 @@ export class ConversationComponent implements OnInit {
     content :  new FormControl('',[ Validators.required, Validators.maxLength(100) ])
   }); 
   submitted : boolean = false;
+  
  
 
 
@@ -166,13 +173,21 @@ export class ConversationComponent implements OnInit {
         //console.log("NavigationEnd  Event Event Event Event Event  Event Event Event Event Event ");
         this.getpartInfo();
         this.getConversationDet();
+      
         this._router.navigated = false;
         this.ngOnDestroy();
       }
     });
   }
 
+  ngAfterViewChecked() {        
+    this.scrollToBottom()
+} 
 
+scrollToBottom(): void {
+  
+   this.scrollMe.nativeElement.scrollTop = this.scrollMe.nativeElement.scrollHeight;                
+}
 
   ngOnDestroy() {
     this.eventSubscription.add();

@@ -8,8 +8,8 @@
         <p>{{partFN}} {{partLN}} </p>
        
     </div>
-    <div class="messages">
-        <ul>
+    <div class="messages"  #scrollMe>
+        <ul class="chat"  #scrollMe >
             <li class="sent" *ngFor="let message of messages">
                 <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
                 <p>{{message.content}}</p>
